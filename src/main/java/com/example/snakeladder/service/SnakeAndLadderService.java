@@ -50,7 +50,7 @@ public class SnakeAndLadderService {
         do {
             previousPosition = newPosition;
             for (Snake snake : snakeAndLadderBoard.getSnakes()) {
-                if (snake.getStart() == newPosition) {
+                if (snake.getStart() == newPosition && snake.getStart() > snake.getEnd()) {
                     newPosition = snake.getEnd();
                 }
             }
@@ -88,26 +88,26 @@ public class SnakeAndLadderService {
     }
 
 
-    public void startGame(Boolean flag,Integer noofturns) {
-   int count=0;
-     while( count <noofturns) {
-        count++;
-         int totalDiceValue =0;
-    if(flag) {
-         totalDiceValue = DiceService.crookedRollEven(); // Each player rolls the dice when their turn comes.
-    }
-    else{
-         totalDiceValue = DiceService.roll();
-    }
-    Player currentPlayer = players.poll();
-    movePlayer(currentPlayer, totalDiceValue);
-    if (hasPlayerWon(currentPlayer)) {
-        System.out.println(currentPlayer.getName() + " wins the game");
-        snakeAndLadderBoard.getPlayerPieces().remove(currentPlayer.getId());
-    } else {
-        players.add(currentPlayer);
-    }
-}
+    public void startGame(Boolean flag, Integer noofturns) {
+        int count = 0;
+        while (count < noofturns) {
+            count++;
+            int totalDiceValue = 0;
+            if (flag) {
+
+                totalDiceValue = DiceService.crookedRollEven(); // Each player rolls the dice when their turn comes.
+            } else {
+                totalDiceValue = DiceService.roll();
+            }
+            Player currentPlayer = players.poll();
+            movePlayer(currentPlayer, totalDiceValue);
+            if (hasPlayerWon(currentPlayer)) {
+                System.out.println(currentPlayer.getName() + " wins the game");
+                snakeAndLadderBoard.getPlayerPieces().remove(currentPlayer.getId());
+            } else {
+                players.add(currentPlayer);
+            }
+        }
 
     }
 }
